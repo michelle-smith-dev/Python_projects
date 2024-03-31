@@ -93,7 +93,7 @@ class TicTacToe:
         else:
             self.usr_turn()
         print("Human list:", self.x_player)
-        return self.winCondition()
+        return self.winCondition("X")
 
     def cpu_move(self):
         # Generate random input to run through the converter based on list values not 'X'
@@ -107,73 +107,41 @@ class TicTacToe:
         else:
             self.cpu_move()
         print("CPU list:", self.comp_player)
-        return self.winCondition()
+        return self.winCondition("O")
 
-    def winCondition(self):
-        if self.board[0][0] == 'X' and self.board[0][1] == 'X' and self.board[0][2] == 'X':
+    def winCondition(self, player=None):
+        if self.board[0][0] == player and self.board[0][1] == player and self.board[0][2] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[1][0] == 'X' and self.board[1][1] == 'X' and self.board[1][2] == 'X':
+        elif self.board[1][0] == player and self.board[1][1] == player and self.board[1][2] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[2][0] == 'X' and self.board[2][1] == 'X' and self.board[2][2] == 'X':
+        elif self.board[2][0] == player and self.board[2][1] == player and self.board[2][2] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[0][0] == 'X' and self.board[1][0] == 'X' and self.board[2][0] == 'X':
+        elif self.board[0][0] == player and self.board[1][0] == player and self.board[2][0] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[0][1] == 'X' and self.board[1][1] == 'X' and self.board[2][1] == 'X':
+        elif self.board[0][1] == player and self.board[1][1] == player and self.board[2][1] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[0][2] == 'X' and self.board[1][2] == 'X' and self.board[2][2] == 'X':
+        elif self.board[0][2] == player and self.board[1][2] == player and self.board[2][2] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[0][0] == 'X' and self.board[1][1] == 'X' and self.board[2][2] == 'X':
+        elif self.board[0][0] == player and self.board[1][1] == player and self.board[2][2] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[0][2] == 'X' and self.board[1][1] == 'X' and self.board[2][0] == 'X':
+        elif self.board[0][2] == player and self.board[1][1] == player and self.board[2][0] == player:
             self.displayBoard()
             self.win = True
             print("You Win!")
-        elif self.board[0][0] == 'O' and self.board[0][1] == 'O' and self.board[0][2] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[1][0] == 'O' and self.board[1][1] == 'O' and self.board[1][2] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[2][0] == 'O' and self.board[2][1] == 'O' and self.board[2][2] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[0][0] == 'O' and self.board[1][0] == 'O' and self.board[2][0] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[0][1] == 'O' and self.board[1][1] == 'O' and self.board[2][1] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[0][2] == 'O' and self.board[1][2] == 'O' and self.board[2][2] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[0][0] == 'O' and self.board[1][1] == 'O' and self.board[2][2] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
-        elif self.board[0][2] == 'O' and self.board[1][1] == 'O' and self.board[2][0] == 'O':
-            self.displayBoard()
-            self.win = True
-            print("Computer Wins!")
         else:
             return False
 
