@@ -18,36 +18,35 @@ class TicTacToe:
         self.board = [[0, 1, 2],
                       [3, 4, 5],
                       [6, 7, 8]]
-        self.x_player = []
-        self.comp_player = []
+        self.moves = 0
 
     def run(self):
-        # self.is_player_turn = True
         while True:
-            # Display board
-            self.display_board()
-            # Get user input, check if it's valid and convert
-            user_input = self.get_user_input()
-            i, j = user_input
-            # Pass converted number to update the board
-            self.update_board(i, j, "X")
-            # Pass updated board to win condition
-            if self.win_condition("X") is True:
+
+            self.display_board()  # Display board at start of game and after each round of turns
+
+            user_input = self.get_user_input()  # Get user input, check if it's valid and convert
+            i, j = user_input  # Return user input as coordinates on the board to use index values to update board
+            self.update_board(i, j, "X")  # Pass converted number to update the board
+            if self.win_condition("X") is True:  # Pass updated board to win condition
+                self.display_board()
                 print("Congratulations, you win!")
                 break
-            # CPU Move
-            cpu_input = self.cpu_move()
-            i, j = cpu_input
-            # Update CPU Move
-            self.update_board(i, j, "O")
-            # Check if computer has won
-            if self.win_condition("O") is True:
+
+            if self.moves >= 9:  # Check if all 9 moves have been made without anyone winning
+                print("Cat Wins!")
+                break
+
+            cpu_input = self.cpu_move()  # CPU Move
+            i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+            self.update_board(i, j, "O")  # Update CPU Move
+            if self.win_condition("O") is True:  # Check if computer has won
+                self.display_board()
                 print("You Lose. Computer Wins.")
                 break
 
     def get_user_input(self):
-        # Check that input is a valid number between 0 - 8, store used numbers from both users
-        # Check that number is available on the board
+        # Check that input is a valid number between 0 - 8 and is available on the board
         while True:
             user_input = int(input("Where do you want to put your 'X'?: "))
             if user_input in range(9):
@@ -62,11 +61,8 @@ class TicTacToe:
         return i, j
 
     def update_board(self, val1, val2, player):
-        if player == 'X':
-            self.x_player.append([val1, val2])
-        else:
-            self.comp_player.append([val1, val2])
-        self.board[val1][val2] = player
+        self.board[val1][val2] = player  # Update board with player's X or O
+        self.moves += 1
 
     def cpu_move(self):
         # Generate random input to run through the converter based on list values not 'X'
