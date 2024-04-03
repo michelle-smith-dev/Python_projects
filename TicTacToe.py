@@ -1,46 +1,3 @@
-# # user is 'O'
-# # computer is 'x'
-#
-# # mat_ij = [
-# #     [(0, 0), (0, 1), (0, 2),],
-# #     [(1, 0), (1, 1), (1, 2),],
-# #     [(2, 0), (2, 1), (2, 2),]
-# # ]
-# #
-# # board = mat_ij
-# # for row in board:
-# #     for element in row:
-# #         print('example1: ', element)
-#
-# # ## 3x3 Matrix below
-# # board = [[0, 1, 2],
-# #         [3, 4, 5],
-# #         [6, 7, 8]]
-# #
-# # def convert_int_to_ij(number):
-# #     i = number // 3
-# #     j = number % 3
-# #     return (i, j)
-# #
-# # print(convert_int_to_ij(6))
-#
-# ## 3x3 Matrix below
-# # board = [[1, 2, 3],
-# #         [4, 5, 6],
-# #         [7, 8, 9]]
-# #
-# # board[0][0] = 'X'
-# # board[1][1] = 'O'
-# # # [print(a) for a in board]
-# # div = '_'
-# # for i in board:
-# #         print(*i, sep='|')
-# #
-# # # create a function that displays the board after each player has had a turn
-# # for i in board:
-# #         print(*i, sep='|')
-# # create a function that takes input, such a number from the grid as the place they want
-# # to put their x. Then display that by showing the rendered version replacing the number with the x
 # # start app
 # # show board
 # # prompt for user input
@@ -54,6 +11,7 @@
 # # show updated board
 import random
 
+
 class TicTacToe:
 
     def __init__(self):
@@ -62,86 +20,75 @@ class TicTacToe:
                       [6, 7, 8]]
         self.x_player = []
         self.comp_player = []
-        self.turn = "player"
-        self.win = False
-        while self.win == False:
-            self.usr_turn()
 
-    def usr_turn(self):
-        self.displayBoard()  # To prompt the user, we first want to show them the board
-        if self.turn == "player":
-            prompt = int(input("Where do you want to put your 'X'?: "))
-            if prompt in range(9):  # check that input is valid, i.e. valid number in grid
-                # apply user input to update board
-                self.convert_int_to_ij(prompt)
-        else:
-            self.cpu_move()
+    def run(self):
+        # self.is_player_turn = True
+        while True:
+            # Display board
+            self.displayBoard()
+            # Get user input, check if it's valid and convert
+            user_input = self.get_user_input()
+            i, j = user_input
+            # Pass converted number to update the board
+            self.update_board(i, j, "X")
+            # Pass updated board to win condition
+            if self.winCondition("X") is True:
+                print("Congratulations, you win!")
+                break
+            # CPU Move
+            cpu_input = self.cpu_move()
+            i, j = cpu_input
+            # Update CPU Move
+            self.update_board(i, j, "O")
+            # Check if computer has won
+            if self.winCondition("O") is True:
+                print("You Lose. Computer Wins.")
+                break
 
-    # helper function to convert int to (i, j)
-    def convert_int_to_ij(self, number):
-        self.i = number // 3
-        self.j = number % 3
-        return self.updateBoard(self.i, self.j)
+    def get_user_input(self):
+        # Check that input is a valid number between 0 - 8
+        # Store used numbers from both users
+        # Check that number is available on the board
+        while True:
+            user_input = int(input("Where do you want to put your 'X'?: "))
+            if user_input in range(9):
+                i, j = self.convert_to_ij(user_input)
+                if self.board[i][j] == user_input:
+                    return i, j
 
-    def updateBoard(self, val1, val2):
-        # if True:
-        hu = [val1, val2]
-        if hu not in self.comp_player:
+    @staticmethod
+    def convert_to_ij(number):
+        i = number // 3
+        j = number % 3
+        return i, j
+
+    def update_board(self, val1, val2, player):
+        if player == 'X':
             self.x_player.append([val1, val2])
-            self.board[val1][val2] = 'X'
-            self.turn = "cpu"
         else:
-            self.usr_turn()
-        print("Human list:", self.x_player)
-        return self.winCondition("X")
+            self.comp_player.append([val1, val2])
+        self.board[val1][val2] = player
+
 
     def cpu_move(self):
         # Generate random input to run through the converter based on list values not 'X'
-        y = random.sample(range(0, 3), 2)
-        if y not in self.x_player and y not in self.comp_player:
-            self.comp_player.append(y)
-            val1 = y[0]
-            val2 = y[1]
-            self.board[val1][val2] = 'O'
-            self.turn = "player"
-        else:
-            self.cpu_move()
-        print("CPU list:", self.comp_player)
-        return self.winCondition("O")
+        while True:
+            y = random.choice(range(9))
+            i, j = self.convert_to_ij(y)
+            if self.board[i][j] == y:
+                return i, j
 
     def winCondition(self, player=None):
-        if self.board[0][0] == player and self.board[0][1] == player and self.board[0][2] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[1][0] == player and self.board[1][1] == player and self.board[1][2] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[2][0] == player and self.board[2][1] == player and self.board[2][2] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[0][0] == player and self.board[1][0] == player and self.board[2][0] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[0][1] == player and self.board[1][1] == player and self.board[2][1] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[0][2] == player and self.board[1][2] == player and self.board[2][2] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[0][0] == player and self.board[1][1] == player and self.board[2][2] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
-        elif self.board[0][2] == player and self.board[1][1] == player and self.board[2][0] == player:
-            self.displayBoard()
-            self.win = True
-            print("You Win!")
+        horizontal_top = self.board[0][0] == player and self.board[0][1] == player and self.board[0][2] == player
+        horizontal_mid = self.board[1][0] == player and self.board[1][1] == player and self.board[1][2] == player
+        horizontal_bottom = self.board[2][0] == player and self.board[2][1] == player and self.board[2][2] == player
+        vertical_left = self.board[0][0] == player and self.board[1][0] == player and self.board[2][0] == player
+        vertical_mid = self.board[0][1] == player and self.board[1][1] == player and self.board[2][1] == player
+        vertical_right = self.board[0][2] == player and self.board[1][2] == player and self.board[2][2] == player
+        diag_top_left = self.board[0][0] == player and self.board[1][1] == player and self.board[2][2] == player
+        diag_top_right = self.board[0][2] == player and self.board[1][1] == player and self.board[2][0] == player
+        if horizontal_top or horizontal_mid or horizontal_bottom or vertical_left or vertical_mid or vertical_right or diag_top_left or diag_top_right:
+            return True
         else:
             return False
 
@@ -152,40 +99,4 @@ class TicTacToe:
 
 
 ttt = TicTacToe()
-# # ttt.displayBoard()
-# ttt.prompt_usr()
-# ttt.convert_int_to_ij(1)
-
-
-# mat_ij = [
-#     [(0, 0), (0, 1), (0, 2)],
-#     [(1, 0), (1, 1), (1, 2)],
-#     [(2, 0), (2, 1), (2, 2)]
-# ]
-# mat_ij[val1][val2] = ('X')
-# print(mat_ij[val1][val2])
-#
-# board = mat_ij
-# for row in board:
-#     for element in row:
-#         print('example1: ', element)
-
-#                 # example: board[0][0] = 'X'
-#                 a = self.board[0][0]
-#                 b = self.board[0][1]
-#                 c = self.board[0][2]
-#                 d = self.board[1][0]
-#                 e = self.board[1][1]
-#                 f = self.board[1][2]
-#                 g = self.board[2][0]
-#                 h = self.board[2][1]
-#                 j = self.board[2][2]
-
-# for _ in self.x_player:
-#     k = _[0]
-#     m = _[1]
-#     if self.board[k][m] == 'X':
-#         print("yay!")
-#     else:
-#         print("Wah!")
-# return self.prompt_usr()
+ttt.run()
