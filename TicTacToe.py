@@ -25,14 +25,14 @@ class TicTacToe:
         # self.is_player_turn = True
         while True:
             # Display board
-            self.displayBoard()
+            self.display_board()
             # Get user input, check if it's valid and convert
             user_input = self.get_user_input()
             i, j = user_input
             # Pass converted number to update the board
             self.update_board(i, j, "X")
             # Pass updated board to win condition
-            if self.winCondition("X") is True:
+            if self.win_condition("X") is True:
                 print("Congratulations, you win!")
                 break
             # CPU Move
@@ -41,13 +41,12 @@ class TicTacToe:
             # Update CPU Move
             self.update_board(i, j, "O")
             # Check if computer has won
-            if self.winCondition("O") is True:
+            if self.win_condition("O") is True:
                 print("You Lose. Computer Wins.")
                 break
 
     def get_user_input(self):
-        # Check that input is a valid number between 0 - 8
-        # Store used numbers from both users
+        # Check that input is a valid number between 0 - 8, store used numbers from both users
         # Check that number is available on the board
         while True:
             user_input = int(input("Where do you want to put your 'X'?: "))
@@ -69,7 +68,6 @@ class TicTacToe:
             self.comp_player.append([val1, val2])
         self.board[val1][val2] = player
 
-
     def cpu_move(self):
         # Generate random input to run through the converter based on list values not 'X'
         while True:
@@ -78,7 +76,7 @@ class TicTacToe:
             if self.board[i][j] == y:
                 return i, j
 
-    def winCondition(self, player=None):
+    def win_condition(self, player=None):
         horizontal_top = self.board[0][0] == player and self.board[0][1] == player and self.board[0][2] == player
         horizontal_mid = self.board[1][0] == player and self.board[1][1] == player and self.board[1][2] == player
         horizontal_bottom = self.board[2][0] == player and self.board[2][1] == player and self.board[2][2] == player
@@ -92,7 +90,7 @@ class TicTacToe:
         else:
             return False
 
-    def displayBoard(self):
+    def display_board(self):
         for grid in self.board:
             print(*grid, sep='|')
         return self.board
