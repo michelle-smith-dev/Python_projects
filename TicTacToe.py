@@ -58,11 +58,14 @@ class TicTacToe:
     def convert_to_ij(number):
         i = number // 3
         j = number % 3
+        print(i, j)
         return i, j
 
     def update_board(self, val1, val2, player):
         self.board[val1][val2] = player  # Update board with player's X or O
         self.moves += 1
+        # print(self.board[val1][val2])
+        return self.board
 
     def cpu_move(self):
         # Generate random input to run through the converter based on list values not 'X'
@@ -93,4 +96,7 @@ class TicTacToe:
 
 
 ttt = TicTacToe()
-ttt.run()
+# ttt.run()
+# ttt.update_board(0, 1, 'X')
+# ttt.display_board()
+ttt.display_board()

@@ -94,6 +94,21 @@
 #
 import random
 
-y = random.randint(0, 3)
-u = random.sample(range(0, 1000), 2)
-print(u)
+
+def convert_to_ij(number):
+    i = number // 3
+    j = number % 3
+    return i, j
+
+
+def cpu_move():
+    # Generate random input to run through the converter based on list values not 'X'
+    while True:
+        y = random.choice(range(9))
+        i, j = convert_to_ij(y)
+        # if self.board[i][j] == y:
+        print(i, j)
+        return i, j
+
+
+cpu_move()
