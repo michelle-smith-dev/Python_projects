@@ -9,25 +9,64 @@ class MyTestCase(unittest.TestCase):
 
     def test_update_board(self):
         update = TicTacToe()
+
+        # Test updating the board is actually updated with an X or an O
         update.update_board(0, 1, "X")
         assert update.display_board()[0][1] == "X"
-# **Update this function to require integer and string types for vals 1 & 2 and player
-# Test if passing invalid parameters in function, the function throws an error
-# Test board is upated with values and player X or O
-# Test moves counter is updated
+        update.update_board(2, 1, "O")
+        assert update.display_board()[0][1] == "X"
 
-#     def test_convert_to_ij(self):
-#         self.assertEqual(TicTacToe.convert_to_ij(8), (2, 2))
-#         self.assertEqual(TicTacToe.convert_to_ij(0), (0, 0))
-#         self.assertEqual(TicTacToe.convert_to_ij(4), (1, 1))
-#
-#     def test_cpu_move(self):
-#
-# # test random number returns valid index numbers, i and j
-# # test a valid number found on the board is chosen
+        # Test when update board is ran, the moves variable adds +1 for each update_board move
+        assert update.moves == 2
+
+        # Test invalid index parameters raises an exception
+        with self.assertRaises(IndexError):
+            update.update_board(3, 1, "X")
+        with self.assertRaises(IndexError):
+            update.update_board(2, 4, "O")
+        with self.assertRaises(TypeError):
+            update.update_board("hello", 1, "O")
+        # Ask Scott about if I should test that player can only be a string value, and maybe only 1 character
+
+
+    def test_convert_to_ij(self):
+
+        # Test function can convert integers successfully
+        self.assertEqual(TicTacToe.convert_to_ij(8), (2, 2))
+        self.assertEqual(TicTacToe.convert_to_ij(0), (0, 0))
+        self.assertEqual(TicTacToe.convert_to_ij(4), (1, 1))
+        self.assertEqual(TicTacToe.convert_to_ij(-1), (-1, 2))
+        self.assertEqual(TicTacToe.convert_to_ij(1022), (340, 2))
+        self.assertEqual(TicTacToe.convert_to_ij(1.22), (0.0, 1.22))
+
+        # Test function raises an error when integer is not passed
+        with self.assertRaises(TypeError):
+            TicTacToe.convert_to_ij("Hello")
+
+    def test_cpu_move(self):
+
+        ttt = TicTacToe()
+        cpu_move = ttt.cpu_move()
+
+        # Test i, j is in valid range
+        i, j = 0, 2
+        result = False
+        for element in cpu_move:
+            if element >= i and element <= j:
+                result = True
+                print(element)
+                break
+
+        assert result == True
+
+        # Test boundaries by populating the board and then running the cpu_move and make sure it eventually picks the correct index
+        # Test more boundaries by populating with a couple, then with mid, like 5 and test to make sure it hasn't picked
+        # a used value on the board
+        # Loop the cpu_move until all values on the board have been chosen
+
 # # test if random number is not valid, the while loop will run until a valid number is chosen
-#
-#
+
+
 #     def test_win_condition(self):
 #
 # # Test if no player parameter is provided, the function will return False
