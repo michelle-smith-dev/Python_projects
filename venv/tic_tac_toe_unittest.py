@@ -63,6 +63,7 @@ class MyTestCase(unittest.TestCase):
         # Test more boundaries by populating with a couple, then with mid, like 5 and test to make sure it hasn't picked
         # a used value on the board
         # Loop the cpu_move until all values on the board have been chosen
+        # Loop over the cpu_move a hundred times, maybe put the above for loop in a while loop to make it run several times
 
 # # test if random number is not valid, the while loop will run until a valid number is chosen
 
