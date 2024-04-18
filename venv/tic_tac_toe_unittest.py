@@ -26,7 +26,6 @@ class MyTestCase(unittest.TestCase):
             update.update_board(2, 4, "O")
         with self.assertRaises(TypeError):
             update.update_board("hello", 1, "O")
-        # Ask Scott about if I should test that player can only be a string value, and maybe only 1 character
 
 
     def test_convert_to_ij(self):
@@ -43,7 +42,7 @@ class MyTestCase(unittest.TestCase):
         with self.assertRaises(TypeError):
             TicTacToe.convert_to_ij("Hello")
 
-    def test_cpu_move(self):
+    def test_cpu_move_blank_board(self):
 
         ttt = TicTacToe()
         cpu_move = ttt.cpu_move()
@@ -59,10 +58,47 @@ class MyTestCase(unittest.TestCase):
 
         assert result == True
 
+        # Loop the cpu_move until all values on the board have been chosen
+        move = False
+        while ttt.moves < 9:
+            cpu_input = ttt.cpu_move()
+            i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+            ttt.update_board(i, j, "X")
+            if ttt.moves >= 9:
+                move = True
+                ttt.display_board()
+
+        assert move == True
+
+    # Start with board having 1 move on it, and verify cpu_move can fill remaining board
+    def test_cpu_move_filled_board(self):
+        ttt = TicTacToe()
+        cpu_move = ttt.cpu_move()
+        m, n = 0, 0  # I want [0, 0][0, 1][0, 2][1, 0][1, 1][1, 2][2, 0][2, 1]
+        ttt.update_board(m, n, "O")
+        while m != 2 and n != 2:
+            for ele_m in range(3):
+                for ele_n in range(3):
+                    ttt.update_board(m, n, "O")
+                    n += 1
+                m += 1
+                n = 0
+
+        move1 = False
+        while ttt.moves < 9:
+            cpu_input = ttt.cpu_move()
+            i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+            ttt.update_board(i, j, "X")
+            if ttt.moves >= 9:
+                move1 = True
+                ttt.display_board()
+
+        assert move1 == True
+
         # Test boundaries by populating the board and then running the cpu_move and make sure it eventually picks the correct index
         # Test more boundaries by populating with a couple, then with mid, like 5 and test to make sure it hasn't picked
         # a used value on the board
-        # Loop the cpu_move until all values on the board have been chosen
+
         # Loop over the cpu_move a hundred times, maybe put the above for loop in a while loop to make it run several times
 
 # # test if random number is not valid, the while loop will run until a valid number is chosen
