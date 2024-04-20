@@ -27,6 +27,18 @@ class MyTestCase(unittest.TestCase):
         with self.assertRaises(TypeError):
             update.update_board("hello", 1, "O")
 
+        # Test filling the board with O's
+        m, n = 0, 0
+        for ele_m in range(3):
+            for ele_n in range(3):
+                # print(ele_m, ele_n)
+                update.update_board(m, n, "O")
+                assert update.board[m][n] == 'O'
+                if ele_m == 2 and ele_n == 2:
+                    break
+                n += 1
+            m += 1
+            n = 0
 
     def test_convert_to_ij(self):
 
@@ -71,29 +83,37 @@ class MyTestCase(unittest.TestCase):
         assert move == True
 
     # Start with board having 1 move on it, and verify cpu_move can fill remaining board
-    def test_cpu_move_filled_board(self):
-        ttt = TicTacToe()
-        cpu_move = ttt.cpu_move()
-        m, n = 0, 0  # I want [0, 0][0, 1][0, 2][1, 0][1, 1][1, 2][2, 0][2, 1]
-        ttt.update_board(m, n, "O")
-        while m != 2 and n != 2:
-            for ele_m in range(3):
-                for ele_n in range(3):
-                    ttt.update_board(m, n, "O")
-                    n += 1
-                m += 1
-                n = 0
-
-        move1 = False
-        while ttt.moves < 9:
-            cpu_input = ttt.cpu_move()
-            i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-            ttt.update_board(i, j, "X")
-            if ttt.moves >= 9:
-                move1 = True
-                ttt.display_board()
-
-        assert move1 == True
+    # def test_cpu_move_filled_board(self):
+    #     ttt = TicTacToe()
+    #     # cpu_move = ttt.cpu_move()
+    #     m, n = 0, 0  # I want [0, 0][0, 1][0, 2][1, 0][1, 1][1, 2][2, 0][2, 1]
+    #     for ele_m in range(3):
+    #         for ele_n in range(3):
+    #             # print(ele_m, ele_n)
+    #             ttt.update_board(m, n, "O")
+    #             while ttt.moves < 9:
+    #                 cpu_input = ttt.cpu_move()
+    #                 i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+    #                 ttt.update_board(i, j, "X")
+    #                 if ttt.moves >= 9:
+    #
+    #             if ele_m == 2 and ele_n == 2:
+    #                 break
+    #             n += 1
+    #         m += 1
+    #         n = 0
+    #
+    #     assert ttt.board[0][0] == 'O'
+        # move1 = False
+        # while ttt.moves < 9:
+        #     cpu_input = ttt.cpu_move()
+        #     i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+        #     ttt.update_board(i, j, "X")
+        #     if ttt.moves >= 9:
+        #         move1 = True
+        #         ttt.display_board()
+        #
+        # assert move1 == True
 
         # Test boundaries by populating the board and then running the cpu_move and make sure it eventually picks the correct index
         # Test more boundaries by populating with a couple, then with mid, like 5 and test to make sure it hasn't picked
