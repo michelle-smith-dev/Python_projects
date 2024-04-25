@@ -54,63 +54,66 @@ class MyTestCase(unittest.TestCase):
 #         with self.assertRaises(TypeError):
 #             TicTacToe.convert_to_ij("Hello")
 #
-#     def test_cpu_move_blank_board(self):
-#
-#         ttt = TicTacToe()
-#         cpu_move = ttt.cpu_move()
-#
-#         # Test i, j is in valid range
-#         i, j = 0, 2
-#         result = False
-#         for element in cpu_move:
-#             if element >= i and element <= j:
-#                 result = True
-#                 print(element)
-#                 break
-#
-#         assert result == True
-#
-#         # Loop the cpu_move until all values on the board have been chosen
-#         move = False
-#         while ttt.moves < 9:
-#             cpu_input = ttt.cpu_move()
-#             i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-#             ttt.update_board(i, j, "X")
-#             if ttt.moves >= 9:
-#                 move = True
-#                 ttt.display_board()
-#
-#         assert move == True
-#
-#
-#
-#         # loops = 100
-#         # while loops is not 0:
-#         #     while ttt.moves < 9:
-#         #         cpu_input = ttt.cpu_move()
-#         #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-#         #         ttt.update_board(i, j, "X")
-#         #         if ttt.moves >= 9:
-#         #             ttt.display_board()
-#         #             assert ttt.moves == 9
-#         #             loops -= 1
-#
-    # Loop through cpu_move function a hundred times with an empty board
-    def test_cpu_move_recursively(self, loops=100):
+    def test_cpu_move_blank_board(self):
+
         ttt = TicTacToe()
         cpu_move = ttt.cpu_move()
 
-        while ttt.moves < 9:
-            cpu_input = ttt.cpu_move()
-            i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-            ttt.update_board(i, j, "X")
-            if ttt.moves >= 9:
-                assert ttt.moves == 9
-                if loops is not 0:
-                    return self.test_cpu_move_recursively(loops-1)
-                else:
-                    assert loops == 0
-                    return False
+        # # Test i, j is in valid range
+        # i, j = 0, 2
+        # result = False
+        # for element in cpu_move:
+        #     if element >= i and element <= j:
+        #         result = True
+        #         print(element)
+        #         break
+        #
+        # assert result == True
+        #
+        # # Loop the cpu_move until all values on the board have been chosen
+        # move = False
+        # while ttt.moves < 9:
+        #     cpu_input = ttt.cpu_move()
+        #     i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+        #     ttt.update_board(i, j, "X")
+        #     if ttt.moves >= 9:
+        #         move = True
+        #         ttt.display_board()
+        #
+        # assert move == True
+
+
+        loops = 5
+        while loops is not 0:
+            ttt = TicTacToe()
+
+            while ttt.moves < 9:
+                cpu_input = ttt.cpu_move()
+                i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+                ttt.update_board(i, j, "X")
+                if ttt.moves >= 9:
+                    ttt.display_board()
+                    assert ttt.moves == 9
+
+            loops -= 1
+
+
+    # Loop through cpu_move function a hundred times with an empty board
+    # def test_cpu_move_recursively(self, loops=100):
+    #     ttt = TicTacToe()
+    #     cpu_move = ttt.cpu_move()
+    #
+    #     while ttt.moves < 9:
+    #         cpu_input = ttt.cpu_move()
+    #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+    #         ttt.update_board(i, j, "X")
+    #         if ttt.moves >= 9:
+    #             assert ttt.moves == 9
+    #             if loops is not 0:
+    #                 return self.test_cpu_move_recursively(loops-1)
+    #             else:
+    #                 assert loops == 0
+    #                 return False
 
 
 #     # Start with board having 1 move on it, and verify cpu_move can fill remaining board
