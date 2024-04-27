@@ -54,10 +54,10 @@ class MyTestCase(unittest.TestCase):
 #         with self.assertRaises(TypeError):
 #             TicTacToe.convert_to_ij("Hello")
 #
-    def test_cpu_move_blank_board(self):
-
-        ttt = TicTacToe()
-        cpu_move = ttt.cpu_move()
+    # def test_cpu_move_blank_board(self):
+    #
+    #     ttt = TicTacToe()
+    #     cpu_move = ttt.cpu_move()
 
         # # Test i, j is in valid range
         # i, j = 0, 2
@@ -83,22 +83,24 @@ class MyTestCase(unittest.TestCase):
         # assert move == True
 
 
-        loops = 5
-        while loops is not 0:
-            ttt = TicTacToe()
+        # loops = 0
+        # while loops is not 100:
+        #     ttt = TicTacToe()
+        #
+        #     while ttt.moves < 9:
+        #         cpu_input = ttt.cpu_move()
+        #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+        #         ttt.update_board(i, j, "X")
+        #         if ttt.moves >= 9:
+        #             ttt.display_board()
+        #             assert ttt.moves == 9
+        #
+        #     loops += 1
+        #
+        # assert loops == 100
 
-            while ttt.moves < 9:
-                cpu_input = ttt.cpu_move()
-                i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-                ttt.update_board(i, j, "X")
-                if ttt.moves >= 9:
-                    ttt.display_board()
-                    assert ttt.moves == 9
 
-            loops -= 1
-
-
-    # Loop through cpu_move function a hundred times with an empty board
+    # Loop through cpu_move function a hundred times with an empty board -- recursively
     # def test_cpu_move_recursively(self, loops=100):
     #     ttt = TicTacToe()
     #     cpu_move = ttt.cpu_move()
@@ -117,9 +119,55 @@ class MyTestCase(unittest.TestCase):
 
 
 #     # Start with board having 1 move on it, and verify cpu_move can fill remaining board
-#     # def test_cpu_move_filled_board(self):
-#     #     ttt = TicTacToe()
-#     #     # cpu_move = ttt.cpu_move()
+    def test_cpu_move_filled_board(self):
+        ttt = TicTacToe()
+        cpu_move = ttt.cpu_move()
+
+        loops1 = 9
+        while loops1:
+            ttt = TicTacToe()
+
+            for i in range(loops1-1):
+                user_input = ttt.cpu_move()
+                k, m = user_input
+                ttt.update_board(k, m, "O")
+            assert ttt.moves == loops1-1
+            print("Total 'O' moves:", ttt.moves)
+
+
+            while ttt.moves < 9:
+                cpu_input = ttt.cpu_move()
+                i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+                ttt.update_board(i, j, "X")
+                if ttt.moves >= 9:
+                    ttt.display_board()
+                    assert ttt.moves == 9
+            loops1 -= 1
+
+        # loops1 = 1
+        # while range(loops1):
+        #     ttt = TicTacToe()
+        #
+        #     user_input = ttt.cpu_move()
+        #     k, m = user_input
+        #     ttt.update_board(k, m, "O")
+        #     # print("how many loops in user:", loops)
+        #     # print("How many moves:", ttt.moves)
+        #     # assert ttt.moves == loops
+        #
+        #     while ttt.moves < 9:
+        #         cpu_input = ttt.cpu_move()
+        #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+        #         ttt.update_board(i, j, "X")
+        #         if ttt.moves >= 9:
+        #             ttt.display_board()
+        #             assert ttt.moves == 9
+        #     loops1 -= 1
+
+
+
+
+
 #     #     m, n = 0, 0  # I want [0, 0][0, 1][0, 2][1, 0][1, 1][1, 2][2, 0][2, 1]
 #     #     for ele_m in range(3):
 #     #         for ele_n in range(3):
@@ -152,8 +200,6 @@ class MyTestCase(unittest.TestCase):
 #         # Test boundaries by populating the board and then running the cpu_move and make sure it eventually picks the correct index
 #         # Test more boundaries by populating with a couple, then with mid, like 5 and test to make sure it hasn't picked
 #         # a used value on the board
-#
-#         # Loop over the cpu_move a hundred times, maybe put the above for loop in a while loop to make it run several times
 #
 # # # test if random number is not valid, the while loop will run until a valid number is chosen
 #
