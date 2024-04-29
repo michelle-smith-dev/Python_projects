@@ -3,7 +3,7 @@ import unittest
 from TicTacToe import TicTacToe
 
 class MyTestCase(unittest.TestCase):
-#
+
 #     # def test_run_method(self):
 #
 #
@@ -54,169 +54,103 @@ class MyTestCase(unittest.TestCase):
 #         with self.assertRaises(TypeError):
 #             TicTacToe.convert_to_ij("Hello")
 #
-    # def test_cpu_move_blank_board(self):
-    #
-    #     ttt = TicTacToe()
-    #     cpu_move = ttt.cpu_move()
+#     def test_cpu_move_blank_board(self):
+#         ttt = TicTacToe()
+#
+#         # Test if i, j returned in cpu_move function is in valid range
+#         for element in ttt.cpu_move():
+#             print("cpu_move value:", element)
+#             assert element <= 2
+#
+#         # Loop the cpu_move until all values on the board have been chosen
+#         while ttt.moves < 9:
+#             cpu_input = ttt.cpu_move()
+#             i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+#             ttt.update_board(i, j, "X")
+#             if ttt.moves >= 9:
+#                 ttt.display_board()
+#
+#         assert ttt.moves == 9
+#
+#         # Loop through blank cpu_move board 100 times -- iteratively
+#         loops = 0
+#         while loops is not 100:
+#             ttt = TicTacToe()
+#
+#             while ttt.moves < 9:
+#                 cpu_input = ttt.cpu_move()
+#                 i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+#                 ttt.update_board(i, j, "X")
+#                 if ttt.moves >= 9:
+#                     ttt.display_board()
+#                     assert ttt.moves == 9
+#
+#             loops += 1
+#
+#         assert loops == 100
+#
+#
+#     # # Loop through cpu_move function a hundred times with an empty board -- recursively
+#     # def test_cpu_move_recursively(self, loops=100):
+#     #     ttt = TicTacToe()
+#     #     cpu_move = ttt.cpu_move()
+#     #
+#     #     while ttt.moves < 9:
+#     #         cpu_input = ttt.cpu_move()
+#     #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+#     #         ttt.update_board(i, j, "X")
+#     #         if ttt.moves >= 9:
+#     #             assert ttt.moves == 9
+#     #             if loops is not 0:
+#     #                 return self.test_cpu_move_recursively(loops-1)
+#     #             else:
+#     #                 assert loops == 0
+#     #                 return False
+#
+#
+#     # Start with board filled with all 'O' player moves and reduce by 1 'O' player to verify cpu_move can fill remaining board
+#     def test_cpu_move_filled_board(self):
+#         ttt = TicTacToe()
+#
+#         loops = 10
+#         while loops:
+#             ttt = TicTacToe()
+#
+#             for i in range(loops-1):
+#                 user_input = ttt.cpu_move()
+#                 k, m = user_input
+#                 ttt.update_board(k, m, "O")
+#             assert ttt.moves == loops-1
+#             # print("Total 'O' moves:", ttt.moves)
+#
+#
+#             while ttt.moves < 9:
+#                 cpu_input = ttt.cpu_move()
+#                 i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+#                 ttt.update_board(i, j, "X")
+#                 if ttt.moves >= 9:
+#                     ttt.display_board()
+#                     assert ttt.moves == 9
+#             loops -= 1
+#
+#
+# # #     def test_win_condition(self):
+# # #
+# # # # Test if no player parameter is provided, the function will return False
+# # # # Test if one of the conditions is met, the function returns True
+# # # # Test with a board that is mostly full of X's and O's but there is no tic tac toe
+# # #
 
-        # # Test i, j is in valid range
-        # i, j = 0, 2
-        # result = False
-        # for element in cpu_move:
-        #     if element >= i and element <= j:
-        #         result = True
-        #         print(element)
-        #         break
-        #
-        # assert result == True
-        #
-        # # Loop the cpu_move until all values on the board have been chosen
-        # move = False
-        # while ttt.moves < 9:
-        #     cpu_input = ttt.cpu_move()
-        #     i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-        #     ttt.update_board(i, j, "X")
-        #     if ttt.moves >= 9:
-        #         move = True
-        #         ttt.display_board()
-        #
-        # assert move == True
-
-
-        # loops = 0
-        # while loops is not 100:
-        #     ttt = TicTacToe()
-        #
-        #     while ttt.moves < 9:
-        #         cpu_input = ttt.cpu_move()
-        #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-        #         ttt.update_board(i, j, "X")
-        #         if ttt.moves >= 9:
-        #             ttt.display_board()
-        #             assert ttt.moves == 9
-        #
-        #     loops += 1
-        #
-        # assert loops == 100
-
-
-    # Loop through cpu_move function a hundred times with an empty board -- recursively
-    # def test_cpu_move_recursively(self, loops=100):
-    #     ttt = TicTacToe()
-    #     cpu_move = ttt.cpu_move()
-    #
-    #     while ttt.moves < 9:
-    #         cpu_input = ttt.cpu_move()
-    #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-    #         ttt.update_board(i, j, "X")
-    #         if ttt.moves >= 9:
-    #             assert ttt.moves == 9
-    #             if loops is not 0:
-    #                 return self.test_cpu_move_recursively(loops-1)
-    #             else:
-    #                 assert loops == 0
-    #                 return False
-
-
-#     # Start with board having 1 move on it, and verify cpu_move can fill remaining board
-    def test_cpu_move_filled_board(self):
+    def test_get_user_input(self):
         ttt = TicTacToe()
-        cpu_move = ttt.cpu_move()
 
-        loops1 = 9
-        while loops1:
-            ttt = TicTacToe()
+        ttt.get_user_input()
 
-            for i in range(loops1-1):
-                user_input = ttt.cpu_move()
-                k, m = user_input
-                ttt.update_board(k, m, "O")
-            assert ttt.moves == loops1-1
-            print("Total 'O' moves:", ttt.moves)
+# Test user input only accepts integer value
+# Test if user input is out of range, it will continue to prompt user for correct range of input
+# Test if input is converted properly to index values, i, j
+# Test i, j is only returned if the space is available on the board, i.e. is a valid space
 
 
-            while ttt.moves < 9:
-                cpu_input = ttt.cpu_move()
-                i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-                ttt.update_board(i, j, "X")
-                if ttt.moves >= 9:
-                    ttt.display_board()
-                    assert ttt.moves == 9
-            loops1 -= 1
-
-        # loops1 = 1
-        # while range(loops1):
-        #     ttt = TicTacToe()
-        #
-        #     user_input = ttt.cpu_move()
-        #     k, m = user_input
-        #     ttt.update_board(k, m, "O")
-        #     # print("how many loops in user:", loops)
-        #     # print("How many moves:", ttt.moves)
-        #     # assert ttt.moves == loops
-        #
-        #     while ttt.moves < 9:
-        #         cpu_input = ttt.cpu_move()
-        #         i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-        #         ttt.update_board(i, j, "X")
-        #         if ttt.moves >= 9:
-        #             ttt.display_board()
-        #             assert ttt.moves == 9
-        #     loops1 -= 1
-
-
-
-
-
-#     #     m, n = 0, 0  # I want [0, 0][0, 1][0, 2][1, 0][1, 1][1, 2][2, 0][2, 1]
-#     #     for ele_m in range(3):
-#     #         for ele_n in range(3):
-#     #             # print(ele_m, ele_n)
-#     #             ttt.update_board(m, n, "O")
-#     #             while ttt.moves < 9:
-#     #                 cpu_input = ttt.cpu_move()
-#     #                 i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-#     #                 ttt.update_board(i, j, "X")
-#     #                 if ttt.moves >= 9:
-#     #
-#     #             if ele_m == 2 and ele_n == 2:
-#     #                 break
-#     #             n += 1
-#     #         m += 1
-#     #         n = 0
-#     #
-#     #     assert ttt.board[0][0] == 'O'
-#         # move1 = False
-#         # while ttt.moves < 9:
-#         #     cpu_input = ttt.cpu_move()
-#         #     i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-#         #     ttt.update_board(i, j, "X")
-#         #     if ttt.moves >= 9:
-#         #         move1 = True
-#         #         ttt.display_board()
-#         #
-#         # assert move1 == True
-#
-#         # Test boundaries by populating the board and then running the cpu_move and make sure it eventually picks the correct index
-#         # Test more boundaries by populating with a couple, then with mid, like 5 and test to make sure it hasn't picked
-#         # a used value on the board
-#
-# # # test if random number is not valid, the while loop will run until a valid number is chosen
-#
-#
-# #     def test_win_condition(self):
-# #
-# # # Test if no player parameter is provided, the function will return False
-# # # Test if one of the conditions is met, the function returns True
-# # # Test with a board that is mostly full of X's and O's but there is no tic tac toe
-# #
-# #     def test_get_user_input(self):
-# #
-# # # Test user input only accepts integer value
-# # # Test if user input is out of range, it will continue to prompt user for correct range of input
-# # # Test if input is converted properly to index values, i, j
-# # # Test i, j is only returned if the space is available on the board, i.e. is a valid space
-#
-#
-# if __name__ == '__main__':
-#     unittest.main()
+if __name__ == '__main__':
+    unittest.main()

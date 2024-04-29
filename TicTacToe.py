@@ -58,7 +58,6 @@ class TicTacToe:
     def convert_to_ij(number):
         i = number // 3
         j = number % 3
-        print(i, j)
         return i, j
 
     def update_board(self, val1, val2, player: str):
