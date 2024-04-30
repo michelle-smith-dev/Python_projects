@@ -1,6 +1,6 @@
 import unittest
-# import TicTacToe
 from TicTacToe import TicTacToe
+from unittest.mock import patch, MagicMock
 
 class MyTestCase(unittest.TestCase):
 
@@ -141,10 +141,32 @@ class MyTestCase(unittest.TestCase):
 # # # # Test with a board that is mostly full of X's and O's but there is no tic tac toe
 # # #
 
-    def test_get_user_input(self):
+    # Mock user get_user_input, verify returned value is converted index values
+    @patch("builtins.input", return_value="2")
+    def test_get_user_input(self, mock_get_user_input):
         ttt = TicTacToe()
 
-        ttt.get_user_input()
+        user_input = ttt.get_user_input()
+        self.assertEqual(user_input, (0, 2))
+
+    # Mock user input move, run through get_user_input function, pass returned value to update board
+    @patch("builtins.input", return_value="5")
+    def test_get_user_input_move(self, mock_get_user_input):
+        ttt = TicTacToe()
+
+        user_input = ttt.get_user_input()
+        i, j = user_input
+        ttt.update_board(i, j, "X")
+
+        self.assertEqual(user_input, (1, 2))
+        assert ttt.display_board()[1][2] == "X"
+
+    # Mock get_user_input function's input only accepts integer
+    @patch("builtins.input", return_value="A")
+    def test_get_user_input_type_error(self, mock_get_user_input):
+        ttt = TicTacToe()
+        with self.assertRaises(ValueError):
+            user_input = ttt.get_user_input()
 
 # Test user input only accepts integer value
 # Test if user input is out of range, it will continue to prompt user for correct range of input
