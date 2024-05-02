@@ -108,70 +108,139 @@ class MyTestCase(unittest.TestCase):
 #     #                 return False
 #
 #
-#     # Start with board filled with all 'O' player moves and reduce by 1 'O' player to verify cpu_move can fill remaining board
-#     def test_cpu_move_filled_board(self):
+    # Start with board filled with all 'O' player moves and reduce by 1 'O' player to verify cpu_move can fill remaining board
+    # def test_cpu_move_filled_board(self):
+    #     ttt = TicTacToe()
+    #
+    #     loops = 10
+    #     while loops:
+    #         ttt = TicTacToe()
+    #
+    #         for i in range(loops-1):
+    #             user_input = ttt.cpu_move()
+    #             k, m = user_input
+    #             ttt.update_board(k, m, "O")
+    #         assert ttt.moves == loops-1
+    #
+    #         while ttt.moves < 9:
+    #             cpu_input = ttt.cpu_move()
+    #             i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+    #             ttt.update_board(i, j, "X")
+    #             if ttt.moves >= 9:
+    #                 ttt.display_board()
+    #                 assert ttt.moves == 9
+    #         loops -= 1
+
+
+    def test_win_condition(self):
+        ttt = TicTacToe()
+
+        # Test the board with winning condition for player 'X'
+        ttt.update_board(0, 1, "X")
+        ttt.update_board(0, 0, "X")
+        ttt.update_board(0, 2, "X")
+        check_board = ttt.win_condition("X")
+        assert check_board == True
+
+        # Test the board with 2 moves for X and 1 move for O
+        ttt = TicTacToe()
+        ttt.update_board(0, 1, "X")
+        ttt.update_board(0, 0, "X")
+        ttt.update_board(0, 2, "O")
+        check_board = ttt.win_condition("X")
+        assert check_board == False
+
+        # Test the board various moves from both players, no win
+        ttt = TicTacToe()
+        ttt.update_board(0, 0, "X")
+        ttt.update_board(0, 1, "X")
+        ttt.update_board(0, 2, "O")
+        ttt.update_board(1, 1, "O")
+        ttt.update_board(2, 2, "O")
+        ttt.update_board(1, 2, "X")
+        # Assert no win for Player X
+        check_board = ttt.win_condition("X")
+        assert check_board == False
+
+        # Assert no win for Player O
+        check_board = ttt.win_condition("O")
+        assert check_board == False
+
+        # Test the win condition for player who does not have the win
+        ttt = TicTacToe()
+        ttt.update_board(0, 0, "X")
+        ttt.update_board(0, 1, "X")
+        ttt.update_board(0, 2, "O")
+        ttt.update_board(1, 1, "X")
+        ttt.update_board(2, 2, "O")
+        ttt.update_board(1, 0, "X")
+        ttt.update_board(1, 2, "O")
+
+        check_board = ttt.win_condition("X")
+        assert check_board == False
+
+        # Test if no player parameter is specified, an error occurs
+        with self.assertRaises(TypeError):
+            check_condition = ttt.win_condition()
+
+        # Check win occurs while looping through playing the board
+        ttt = TicTacToe()
+        loops = 10
+        while loops:
+            ttt = TicTacToe()
+
+            for i in range(loops - 1):
+                user_input = ttt.cpu_move()
+                k, m = user_input
+                ttt.update_board(k, m, "O")
+            assert ttt.moves == loops - 1
+
+            while ttt.moves < 9:
+                cpu_input = ttt.cpu_move()
+                i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
+                ttt.update_board(i, j, "X")
+                if ttt.moves >= 9:
+                    ttt.display_board()
+                    assert ttt.moves == 9
+            loops -= 1
+        cpu_moves = ttt.win_condition("X")
+        print(ttt.board)
+        assert cpu_moves == True
+
+# Test if one of the conditions is met, the function returns True
+# Test with a board that is mostly full of X's and O's but there is no tic tac toe
+
+
+#     # Mock user get_user_input, verify returned value is converted index values
+#     @patch("builtins.input", return_value="2")
+#     def test_get_user_input(self, mock_get_user_input):
 #         ttt = TicTacToe()
-#
-#         loops = 10
-#         while loops:
-#             ttt = TicTacToe()
-#
-#             for i in range(loops-1):
-#                 user_input = ttt.cpu_move()
-#                 k, m = user_input
-#                 ttt.update_board(k, m, "O")
-#             assert ttt.moves == loops-1
-#             # print("Total 'O' moves:", ttt.moves)
-#
-#
-#             while ttt.moves < 9:
-#                 cpu_input = ttt.cpu_move()
-#                 i, j = cpu_input  # Return CPU value as coordinates on the board to use index values to update board
-#                 ttt.update_board(i, j, "X")
-#                 if ttt.moves >= 9:
-#                     ttt.display_board()
-#                     assert ttt.moves == 9
-#             loops -= 1
-#
-#
-# # #     def test_win_condition(self):
-# # #
-# # # # Test if no player parameter is provided, the function will return False
-# # # # Test if one of the conditions is met, the function returns True
-# # # # Test with a board that is mostly full of X's and O's but there is no tic tac toe
-# # #
-
-    # Mock user get_user_input, verify returned value is converted index values
-    @patch("builtins.input", return_value="2")
-    def test_get_user_input(self, mock_get_user_input):
-        ttt = TicTacToe()
-
-        user_input = ttt.get_user_input()
-        self.assertEqual(user_input, (0, 2))
-
-    # Mock user input move, run through get_user_input function, pass returned value to update board
-    @patch("builtins.input", return_value="5")
-    def test_get_user_input_move(self, mock_get_user_input):
-        ttt = TicTacToe()
-
-        user_input = ttt.get_user_input()
-        i, j = user_input
-        ttt.update_board(i, j, "X")
-
-        self.assertEqual(user_input, (1, 2))
-        assert ttt.display_board()[1][2] == "X"
-
-    # Mock get_user_input function's input only accepts integer
-    @patch("builtins.input", return_value="A")
-    def test_get_user_input_type_error(self, mock_get_user_input):
-        ttt = TicTacToe()
-        with self.assertRaises(ValueError):
-            user_input = ttt.get_user_input()
-
-# Test user input only accepts integer value
-# Test if user input is out of range, it will continue to prompt user for correct range of input
-# Test if input is converted properly to index values, i, j
-# Test i, j is only returned if the space is available on the board, i.e. is a valid space
+# 
+#         user_input = ttt.get_user_input()
+#         self.assertEqual(user_input, (0, 2))
+# 
+#     # Mock user input move, run through get_user_input function, pass returned value to update board
+#     @patch("builtins.input", return_value="5")
+#     def test_get_user_input_move(self, mock_get_user_input):
+#         ttt = TicTacToe()
+# 
+#         user_input = ttt.get_user_input()
+#         i, j = user_input
+#         ttt.update_board(i, j, "X")
+# 
+#         self.assertEqual(user_input, (1, 2))
+#         assert ttt.display_board()[1][2] == "X"
+# 
+#     # Mock get_user_input function's input only accepts integer
+#     @patch("builtins.input", return_value="A")
+#     def test_get_user_input_type_error(self, mock_get_user_input):
+#         ttt = TicTacToe()
+#         with self.assertRaises(ValueError):
+#             user_input = ttt.get_user_input()
+# 
+# 
+# # Test if user input is out of range, it will continue to prompt user for correct range of input
+# # Test i, j is only returned if the space is available on the board, i.e. is a valid space
 
 
 if __name__ == '__main__':

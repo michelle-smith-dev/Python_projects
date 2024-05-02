@@ -72,7 +72,7 @@ class TicTacToe:
             if self.board[i][j] == y:
                 return i, j
 
-    def win_condition(self, player=None):
+    def win_condition(self, player):
         horizontal_top = self.board[0][0] == player and self.board[0][1] == player and self.board[0][2] == player
         horizontal_mid = self.board[1][0] == player and self.board[1][1] == player and self.board[1][2] == player
         horizontal_bottom = self.board[2][0] == player and self.board[2][1] == player and self.board[2][2] == player
