@@ -61,6 +61,8 @@ class TicTacToe:
         return i, j
 
     def update_board(self, val1, val2, player: str):
+        if not isinstance(player, str):
+            raise TypeError
         self.board[val1][val2] = player  # Update board with player's X or O
         self.moves += 1
 
@@ -94,7 +96,3 @@ class TicTacToe:
 
 ttt = TicTacToe()
 # ttt.run()
-# ttt.update_board(2, 1, 3)
-# ttt.display_board()
-# cpu_move = ttt.cpu_move()
-# print(cpu_move.y)
