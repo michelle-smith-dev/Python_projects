@@ -36,8 +36,6 @@ class hangman():
             if debug: print(guess_letter)
 
             # Pass letter to find_letter function to determine if letter is in word
-            # self.find_letter(guess_letter)
-
             # If letter is found in word, display board with letter(s) in proper place
             if self.find_letter(guess_letter) is True:
                 self.display_hangman_board(guess_letter)
