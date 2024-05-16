@@ -17,29 +17,78 @@ If user can guess word, allow user to enter word in prompt, compare word with th
 Loop over the secret word to see if the letter guess is in the word. If yes, print, if no, print not in word, and deduct
 from counter of uses.
 '''
-debug = True
+debug = False
 
+class hangman():
 
-def hangman(word):
-    # Pick secret word from the provided list
-    secret_word = random.choice(word)
-    # Keep count of how many guesses have been used
-    guess_counter = 0
-    # While counter is not more than length of the secret_word + 2, keep prompting user for input
-    while guess_counter < len(secret_word) + 2:
-        if debug: print(guess_counter)
-        if debug: print(len(secret_word) + 2)
-        # Create variable to get user input
-        guess_letter = str(input("Guess a letter. Hint: It's a type of fruit: "))
-        for i in secret_word:
-            # if letter is in word, print the word with empty spaces and guess letter position
-            if guess_letter == i:
-                print("You found a letter!", len(secret_word))
+    def __init__(self):
+        self.secret_word = random.choice(["orange", "banana", "mango", "apple", "pear", "grapefruit", "strawberry", "blueberry", "kiwi", "starfruit"])
+        self.guess_counter = 0
+
+    def play_game(self):
+        # Display blank word at start of game
+        self.display_blank_word()
+
+        while True:
+
+            # Prompt user for user_input to get letter
+            guess_letter = self.get_user_input()
+            if debug: print(guess_letter)
+
+            # Pass letter to find_letter function to determine if letter is in word
+            # self.find_letter(guess_letter)
+
+            # If letter is found in word, display board with letter(s) in proper place
+            if self.find_letter(guess_letter) is True:
+                self.display_hangman_board(guess_letter)
             else:
-                guess_counter += 1
-                print("Letter not in word.")
-    if debug: print(secret_word)
+                print("Letter not found.")
 
+            # Check if word is complete "win function"
+
+            # Loop until the word is completed or guess_counter has exceeded len(secret_word) + 2
+
+    def display_blank_word(self):
+        # Get length of the secret_word and loop over it, displaying _
+        if debug: print(self.secret_word)
+        for i in range(len(self.secret_word)):
+            print('_', end=' ')
+
+    def get_user_input(self):
+        g_letter = str(input("\nGuess a letter. Hint: It's a type of fruit: "))
+        self.guess_counter += 1  # Add the guess to counter
+        return g_letter
+
+    def find_letter(self, letter):
+        # Loop over the secret word and look for the guessed letter.
+        # If exists, return true, else return false
+        if debug: print("find letter function:", self.secret_word)
+        for i in self.secret_word:
+            if debug: print(i)
+            if i == letter:
+                return True
+
+    def display_hangman_board(self, letter: list):
+        if debug: print("Yay, letter is in the word")
+        # I take in the guessed letter. I need to find where it is in the word, and display it. And display '_' for the
+        # other letters.
+        # I need to store this somewhere, and then integrate those letters when I go back through the word.
+        for i in self.secret_word:
+            if i == letter:
+                print(i, end=' ')
+            else:
+                print('_', end=' ')
+
+
+'''
+display blank word
+get user input
+check if letter provided is in word
+if letter is in word, display word with letters in correct location and prompt for user input
+if letter is not in word, prompt for user input [eventually display hangman parts]
+continue to prompt for user input until word is filled or all moves have been used, and end game
+win or lose function
+'''
 # Stop the for loop if all letters in secret word have been guessed and print word
 # Print the location of the letter guessed within the word, i.e. _pp__ for apple
 # Can use ascii to print the _ symbol. Could print using length of the secret word.
@@ -49,5 +98,6 @@ def hangman(word):
 # which outputs '__a_'
 # What if I create a function that takes the secret word, and has a bunch of if statements.
 
-fruits = ["orange", "banana", "mango", "apple", "pear", "grapefruit"]
-hangman(fruits)
+# fruits = ["orange", "banana", "mango", "apple", "pear", "grapefruit"]
+hang = hangman()
+hang.play_game()
