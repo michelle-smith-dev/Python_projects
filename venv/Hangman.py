@@ -23,7 +23,17 @@ class hangman():
 
     def __init__(self):
         self.secret_word = random.choice(["orange", "banana", "mango", "apple", "pear", "grapefruit", "strawberry", "blueberry", "kiwi", "starfruit"])
-        self.guess_counter = 0
+        self.incorrect_guess_counter = 0
+        self.w_display = []
+        for j in range(len(self.secret_word)):
+            self.w_display.append('_')
+
+    # @staticmethod
+    # def word_display(self):
+    #     w_display = []
+    #     for j in range(len(self.secret_word)):
+    #         self.w_display.append('_')
+    #     return w_display
 
     def play_game(self):
         # Display blank word at start of game
@@ -40,11 +50,18 @@ class hangman():
             if self.find_letter(guess_letter) is True:
                 self.display_hangman_board(guess_letter)
             else:
+                self.incorrect_guess_counter += 1  # Add the guess to counter
                 print("Letter not found.")
 
             # Check if word is complete "win function"
+            if self.win_hangman() is None:
+                print("You guessed the word", self.w_display)
+                break
 
-            # Loop until the word is completed or guess_counter has exceeded len(secret_word) + 2
+            # Check how many guesses have been made
+            if self.incorrect_guess_counter >= 6:
+                print("You lose.")
+                break
 
     def display_blank_word(self):
         # Get length of the secret_word and loop over it, displaying _
@@ -54,29 +71,31 @@ class hangman():
 
     def get_user_input(self):
         g_letter = str(input("\nGuess a letter. Hint: It's a type of fruit: "))
-        self.guess_counter += 1  # Add the guess to counter
         return g_letter
 
     def find_letter(self, letter):
         # Loop over the secret word and look for the guessed letter.
         # If exists, return true, else return false
-        if debug: print("find letter function:", self.secret_word)
         for i in self.secret_word:
-            if debug: print(i)
             if i == letter:
                 return True
 
-    def display_hangman_board(self, letter: list):
-        if debug: print("Yay, letter is in the word")
-        # I take in the guessed letter. I need to find where it is in the word, and display it. And display '_' for the
-        # other letters.
-        # I need to store this somewhere, and then integrate those letters when I go back through the word.
+    def display_hangman_board(self, letter):
+        n = 0  # Use as placeholder for index value
         for i in self.secret_word:
             if i == letter:
-                print(i, end=' ')
+                self.w_display[n] = i  # Replace index value with the letter
+                n += 1  # Increase index value as you loop through
             else:
-                print('_', end=' ')
+                n += 1  # Increase index value as you loop through
+        print("Hangman:", self.w_display)
 
+    def win_hangman(self):
+        # Loop over the secret word and determine if all letters are filled
+        for i in self.w_display:
+            if debug: print(i)
+            if i == '_':
+                return True  # True there is a '_' in the word
 
 '''
 display blank word
