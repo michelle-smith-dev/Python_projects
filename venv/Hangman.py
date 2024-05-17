@@ -55,12 +55,12 @@ class hangman():
 
             # Check if word is complete "win function"
             if self.win_hangman() is None:
-                print("You guessed the word", self.w_display)
+                print("\nYOU WIN!")
                 break
 
             # Check how many guesses have been made
             if self.incorrect_guess_counter >= 6:
-                print("You lose.")
+                print("\nYou lose :(")
                 break
 
     def display_blank_word(self):
@@ -88,7 +88,9 @@ class hangman():
                 n += 1  # Increase index value as you loop through
             else:
                 n += 1  # Increase index value as you loop through
-        print("Hangman:", self.w_display)
+        # print("Hangman:", self.w_display)
+        for i in self.w_display:
+            print(i, end=' ')
 
     def win_hangman(self):
         # Loop over the secret word and determine if all letters are filled
