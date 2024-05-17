@@ -27,6 +27,7 @@ class hangman():
         self.w_display = []
         for j in range(len(self.secret_word)):
             self.w_display.append('_')
+        self.letters_guessed = []
 
     # @staticmethod
     # def word_display(self):
@@ -51,10 +52,10 @@ class hangman():
                 self.display_hangman_board(guess_letter)
             else:
                 self.incorrect_guess_counter += 1  # Add the guess to counter
-                print("Letter not found.")
+                print("Letter not found or already guessed.")
 
             # Check if word is complete "win function"
-            if self.win_hangman() is None:
+            if self.win_hangman() is True:
                 print("\nYOU WIN!")
                 break
 
@@ -75,9 +76,9 @@ class hangman():
 
     def find_letter(self, letter):
         # Loop over the secret word and look for the guessed letter.
-        # If exists, return true, else return false
         for i in self.secret_word:
-            if i == letter:
+            if i == letter and i not in self.letters_guessed:
+                self.letters_guessed.append(letter)
                 return True
 
     def display_hangman_board(self, letter):
@@ -88,16 +89,19 @@ class hangman():
                 n += 1  # Increase index value as you loop through
             else:
                 n += 1  # Increase index value as you loop through
-        # print("Hangman:", self.w_display)
         for i in self.w_display:
             print(i, end=' ')
 
     def win_hangman(self):
-        # Loop over the secret word and determine if all letters are filled
+        # Loop over the secret word and determine if a '_' exists. If it doesn't, return True
+        win = 0
         for i in self.w_display:
-            if debug: print(i)
             if i == '_':
-                return True  # True there is a '_' in the word
+                win += 1
+        if debug: print("How many underscores:", win)
+        if win == 0:
+            return True
+
 
 '''
 display blank word
