@@ -17,7 +17,7 @@ If user can guess word, allow user to enter word in prompt, compare word with th
 Loop over the secret word to see if the letter guess is in the word. If yes, print, if no, print not in word, and deduct
 from counter of uses.
 '''
-debug = False
+debug = True
 
 class hangman():
 
@@ -65,9 +65,8 @@ class hangman():
                 break
 
     def display_blank_word(self):
-        # Get length of the secret_word and loop over it, displaying _
         if debug: print(self.secret_word)
-        for i in range(len(self.secret_word)):
+        for i in range(len(self.secret_word)):  # Get length of the secret_word and loop over it, displaying _
             print('_', end=' ')
 
     def get_user_input(self):
@@ -75,8 +74,7 @@ class hangman():
         return g_letter
 
     def find_letter(self, letter):
-        # Loop over the secret word and look for the guessed letter.
-        for i in self.secret_word:
+        for i in self.secret_word:  # Loop over the secret word and look for the guessed letter.
             if i == letter and i not in self.letters_guessed:
                 self.letters_guessed.append(letter)
                 return True
@@ -123,4 +121,6 @@ win or lose function
 
 # fruits = ["orange", "banana", "mango", "apple", "pear", "grapefruit"]
 hang = hangman()
-hang.play_game()
+hang.display_blank_word()
+# hang.play_game()
+# hang.display_blank_word()

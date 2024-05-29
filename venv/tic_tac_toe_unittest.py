@@ -225,6 +225,7 @@ class MyTestCase(unittest.TestCase):
         ttt = TicTacToe()
 
         user_input = ttt.get_user_input()
+        print("WHAT IS MOCK USER INPUT?:", user_input)
         self.assertEqual(user_input, (0, 2))
 
     # Mock user input move, run through get_user_input function, pass returned value to update board
