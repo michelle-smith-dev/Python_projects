@@ -65,17 +65,54 @@ class MyTestCase(unittest.TestCase):
             hang = hangman()
             word = hang.secret_word  # Get secret word for this instance
 
-            p = list(set(string.ascii_letters + string.digits) - set(word))  # Create a list of random letters that do not contain the letters in the secret word
+            p = list(set(string.ascii_letters + string.digits) - set(word))  # Create a list of random letters and numbers that do not contain the letters in the secret word
             c = random.choice(p)  # Choose a letter from the new list created to assert the letter is not in secret word
             assert hang.find_letter(c) == None
             counter -= 1
 
-    def test_display_hangman_board(self):
-        pass
+    # def test_display_hangman_board(self):
+        # hang = hangman()
+        # word = hang.secret_word  # Get secret word for this instance
+        # print("secret word is:", word)
+        # display = hang.w_display  # Get displayed word with guessed letter
+        # print("display of word is:", display)
+        # l = random.choice(word)
+        # output = hang.display_hangman_board(l)
+        # print("Let's get output:", output)
+        # # self.assertEqual(hang.display_hangman_board(l), display)
 
+
+    def test_no_win_hangman(self):
+        counter = 100
+
+        while counter:
+            hang = hangman()
+            word = hang.secret_word  # Get secret word for this instance
+            display = hang.w_display  # Get displayed word with guessed letter
+
+            # Insert a couple of correct letters into the displayed hangman word. This is what the win condition is checking for a win.
+            l1 = random.choice(word)
+            hang.display_hangman_board(l1)
+            l2 = random.choice(word)
+            hang.display_hangman_board(l2)
+
+            self.assertEqual(hang.win_hangman(), None)
+            counter -= 1
 
     def test_win_hangman(self):
-        pass
+        counter = 100
+
+        while counter:
+            hang = hangman()
+            word = hang.secret_word  # Get secret word for this instance
+            display = hang.w_display
+
+            for i in word:
+                hang.display_hangman_board(i)
+            print("displayed word filled in:", display)
+
+            self.assertEqual(hang.win_hangman(), True)
+            counter -= 1
 
 if __name__ == '__main__':
     unittest.main()

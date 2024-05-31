@@ -17,7 +17,7 @@ If user can guess word, allow user to enter word in prompt, compare word with th
 Loop over the secret word to see if the letter guess is in the word. If yes, print, if no, print not in word, and deduct
 from counter of uses.
 '''
-debug = True
+debug = False
 
 class hangman():
 
@@ -26,7 +26,7 @@ class hangman():
         self.incorrect_guess_counter = 0
         self.w_display = []
         for j in range(len(self.secret_word)):
-            self.w_display.append('_')
+            self.w_display.append('_')  # Fill w_display with blank underscores based on length of secret word
         self.letters_guessed = []
 
     # @staticmethod
@@ -121,6 +121,6 @@ win or lose function
 
 # fruits = ["orange", "banana", "mango", "apple", "pear", "grapefruit"]
 hang = hangman()
-hang.display_blank_word()
+# hang.display_hangman_board("e")
 # hang.play_game()
 # hang.display_blank_word()
