@@ -21,10 +21,12 @@ class MyTestCase(unittest.TestCase):
     # @patch("builtins.input", return_value=self.create_mock_letter())
     # def test_play_game(self):
     #     hang = hangman()
-    #     test = self.create_mock_letter()
-    #     guess_letter = test
-    #     guess_letter = hang.play_game()
-        # print("random letter:", mock_letter)
+    # #     test = self.create_mock_letter()
+    #     guess_letter = self.test_get_user_input2
+    #     hang.play_game()
+    # #     guess_letter = hang.play_game()
+    #     # print("random letter:", mock_letter)
+    #     self.assertEqual(hang.incorrect_guess_counter, 1)
 
     # def test_display_blank_word(self, mock_secret_word):
     #     hang = hangman()
@@ -40,6 +42,7 @@ class MyTestCase(unittest.TestCase):
         hang = hangman()
         g_letter = hang.get_user_input()
         self.assertEqual(g_letter, 'a')
+        return g_letter
 
     @patch("builtins.input", return_value="z")
     def test_get_user_input2(self, mock_get_user_input):
@@ -70,9 +73,15 @@ class MyTestCase(unittest.TestCase):
             assert hang.find_letter(c) == None
             counter -= 1
 
-    # def test_display_hangman_board(self):
-        # hang = hangman()
+    def test_display_hangman_board(self):
+        hang = hangman()
+        hang.secret_word = "mango"
+        print("my secret word:", hang.secret_word)
         # word = hang.secret_word  # Get secret word for this instance
+        hang.display_hangman_board("o")
+        print("my displayed word:", hang.w_display)
+        # self.assertEqual(hang.w_display, ['_', '_', '_', '_', 'o'])
+        assert hang.w_display == ['_', '_', '_', '_', 'o']
         # print("secret word is:", word)
         # display = hang.w_display  # Get displayed word with guessed letter
         # print("display of word is:", display)
@@ -82,7 +91,7 @@ class MyTestCase(unittest.TestCase):
         # # self.assertEqual(hang.display_hangman_board(l), display)
 
 
-    def test_no_win_hangman(self):
+    def test_win_hangman_lose(self):
         counter = 100
 
         while counter:
@@ -99,6 +108,12 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(hang.win_hangman(), None)
             counter -= 1
 
+        # Test overwriting the value of w_display with blank letters
+        hang = hangman()
+        hang.w_display = ['_', '_', '_', '_', '_']
+        # print("the changed displayed word:", hang.w_display)
+        self.assertEqual(hang.win_hangman(), None)
+
     def test_win_hangman(self):
         counter = 100
 
@@ -113,6 +128,7 @@ class MyTestCase(unittest.TestCase):
 
             self.assertEqual(hang.win_hangman(), True)
             counter -= 1
+
 
 if __name__ == '__main__':
     unittest.main()

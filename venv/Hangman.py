@@ -23,6 +23,7 @@ class hangman():
 
     def __init__(self):
         self.secret_word = random.choice(["orange", "banana", "mango", "apple", "pear", "grapefruit", "strawberry", "blueberry", "kiwi", "starfruit"])
+        if debug: print("Secret word:", self.secret_word)
         self.incorrect_guess_counter = 0
         self.w_display = []
         for j in range(len(self.secret_word)):
@@ -87,8 +88,9 @@ class hangman():
                 n += 1  # Increase index value as you loop through
             else:
                 n += 1  # Increase index value as you loop through
-        for i in self.w_display:
-            print(i, end=' ')
+        # for i in self.w_display:
+        #     print(i, end=' ')
+        print("displayed word:", self.w_display)
 
     def win_hangman(self):
         # Loop over the secret word and determine if a '_' exists. If it doesn't, return True
@@ -121,6 +123,6 @@ win or lose function
 
 # fruits = ["orange", "banana", "mango", "apple", "pear", "grapefruit"]
 hang = hangman()
-# hang.display_hangman_board("e")
+# hang.display_hangman_board("o")
 # hang.play_game()
 # hang.display_blank_word()
