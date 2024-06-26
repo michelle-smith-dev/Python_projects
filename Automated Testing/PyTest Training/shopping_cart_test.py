@@ -34,7 +34,7 @@ from unittest.mock import patch, MagicMock, Mock
 #     assert cart.get_total_price(price_map)
 
 
- # Now let's rewrite the above to show how fixtures can be very useful
+# Now let's rewrite the above to show how fixtures can be very useful
 @pytest.fixture
 def cart():
     return ShoppingCart(5)
@@ -50,6 +50,7 @@ def test_when_item_added_then_cart_contains_item(cart):
     assert "apple" in cart.get_items()
 
 
+@pytest.mark.run(order=4)
 def test_max_items_fail(cart):
     for i in range(5):
         cart.add("apple")
@@ -64,7 +65,8 @@ def test_max_items_fail(cart):
 #     assert cart.get_total_price(price_map)
 
 
-# This function is created to show mocking a database that isn't quite finish but is created
+# This function is created to show mocking a database [shopping_cart_database.py] that isn't completely implemented
+@pytest.mark
 def test_can_get_total_price(cart):
     cart.add("apple")
     cart.add("orange")
