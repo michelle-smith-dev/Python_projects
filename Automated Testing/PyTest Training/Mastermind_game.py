@@ -37,40 +37,39 @@ class Mastermind:
         self.rand_num2 = random.randrange(1000, 10000)
         self.counter1 = 0
         self.counter2 = 0
-        self.player = "player1"
+        self.player = "Player 1"
 
     # Let's create a director
     def play(self):
 
         # Call the main game play and pass the self.player variable
-        while self.player == "player1":
+        while self.player == "Player 1":
             self.guess_digits(self.player)
-            self.player = "player2"
+            self.player = "Player 2"
 
-        while self.player == "player2" and self.counter1 != 0:
+        while self.player == "Player 2" and self.counter1 != 0:
             self.guess_digits(self.player)
             self.player = None
 
         # Calculate how many guesses it took for each player to determine the Mastermind winner
         while self.counter1 != 0 and self.counter2 != 0:
             if self.counter1 > self.counter2:
-                print("Player2 is the Mastermind! They guessed the correct number in", self.counter2, "times.")
+                print("Player 2 is the Mastermind! They guessed the correct number in", self.counter2, "times.")
             elif self.counter2 > self.counter1:
-                print("Player1 is the Mastermind! They guessed the correct number in", self.counter1, "times.")
+                print("Player 1 is the Mastermind! They guessed the correct number in", self.counter1, "times.")
             else:
                 print("It's a tie! Neither player is a Mastermind.")
             break
 
     def guess_digits(self, player):
 
-        if player == "player1":
+        if player == "Player 1":
             if debug: print("Player 1's random number is:", self.rand_num1)
             while True:
-                user_num = int(input("Guess a 4 digit number: "))
+                user_num = self.user_input(player)
                 # compare user input to rand_num1
                 if user_num == self.rand_num1 and self.counter1 == 0:
-                    print("You guessed it right on the first try. Player1 is the Mastermind!")
-
+                    print("You guessed it right on the first try. Player 1 is the Mastermind!")
                     break
                 elif user_num == self.rand_num1:
                     self.counter1 += 1
@@ -78,26 +77,34 @@ class Mastermind:
                     break
                 else:
                     #  Block of code to reveal correct numbers
-                    self.reveal_num(user_num, self.rand_num1)
+                    revealed_number = self.reveal_num(user_num, self.rand_num1)
                     self.counter1 += 1
-                    print("You did not guess the number, but got these numbers right.")
+                    print("You did not guess the number, but guessed these numbers right.", revealed_number)
 
-        if player == "player2":
+        if player == "Player 2":
             if debug: print("Player 2's random number is:", self.rand_num2)
             while True:
-                user_num = int(input("Guess a 4 digit number: "))
+                user_num = self.user_input(player)
                 # compare user input to rand_num1
                 if user_num == self.rand_num2 and self.counter2 == 0:
-                    print("You guessed it right on the first try. Player2 is the Mastermind!")
+                    print("You guessed it right on the first try. Player 2 is the Mastermind!")
                     break
                 elif user_num == self.rand_num2:
                     self.counter2 += 1
                     print("You guessed it right in", self.counter2, "guesses!")
                     break
                 else:
-                    #  Block of code to reveal correct numbers
+                    revealed_number = self.reveal_num(user_num, self.rand_num2)
                     self.counter2 += 1
-                    print("You did not guess the number, but got these numbers right.")
+                    print("You did not guess the number, but got these numbers right.", revealed_number)
+
+    def user_input(self, player):
+        invalid_inp = True
+        while invalid_inp:
+            user_num = input(f"{player}, guess a 4 digit number between 1000 - 9999: ")
+            if len(user_num) == 4 and user_num.isdigit():
+                invalid_inp = False
+                return int(user_num)
 
     def reveal_num(self, user_input, random_number):
         user_list = [int(x) for x in str(user_input)]
@@ -110,10 +117,12 @@ class Mastermind:
                 revealed_number.append(i)
                 j += 1
             else:
-                revealed_number.append('_')
+                revealed_number.append("_")
                 j += 1
-        print(revealed_number)
+        # list_conv = ','.join(map(str, revealed_number))
+        return revealed_number
 
 
 m = Mastermind()
+# print(m.user_input())
 m.play()
